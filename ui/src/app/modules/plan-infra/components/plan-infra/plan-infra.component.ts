@@ -16,8 +16,7 @@ export class PlanInfraComponent implements OnInit {
   fileToUpload: File = null;
   showBtns = true;
   enableUpload :boolean ;
-  backBtn : boolean = false;
-  showCloud : boolean = false;
+  showCloud_Back : boolean = false;
   cloudDetails : any[] = [];
   nodes : any[] = [];
   showDetailsModal : boolean;
@@ -292,7 +291,8 @@ export class PlanInfraComponent implements OnInit {
   ngOnInit() {
     this.enableUpload = false;
     this.getCloudData = false;
-    this.showResult = false;
+    //this.showResult = false;
+    this.showResult = true;
     this.setDefault();
   }
 
@@ -303,8 +303,7 @@ export class PlanInfraComponent implements OnInit {
   
   uploadFileToActivity() {
     this.showBtns = false;
-    this.backBtn = true;
-    this.showCloud = true;
+    this.showCloud_Back = true;
     this.getCloudData = true;
 
     this.planInfraService.postFile(this.fileToUpload).subscribe(data => {
@@ -322,8 +321,7 @@ export class PlanInfraComponent implements OnInit {
   }
   back(){
     this.showBtns = true;
-    this.backBtn = false;
-    this.showCloud = false;
+    this.showCloud_Back = false;
     this.enableUpload = false;
     this.getCloudData = false;
   }

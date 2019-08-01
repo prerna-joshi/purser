@@ -30,14 +30,14 @@
                   <select clrSelect name="options" [(ngModel)]="cloud.selectedRegion">
                     <option  *ngFor = "let region of cloud.region; let r = index" value = "{{region}}">{{region}}</option>
                   </select>
-                  <div class = "seeResult"><button class="btn btn-outline" [disabled] = "!showResult">See Result</button></div>
+                  <div class = "seeResult"><button class="btn btn-primary" [disabled] = "!showResult">See Result</button></div>
                 </div>
             </div>
         </div>      
   </div>
 </div>
 
-<div class="row" *ngIf = "showCloud">
+<div class="row" *ngIf = "showCloud_Back">
     <div class="col-md-3" *ngFor = "let cloud of cloudDetails ; let c = index">
         <div class="card">
             <div class="card-block">
@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <div class="clr-row backRow" *ngIf = "backBtn">
+  <div class="clr-row backRow" *ngIf = "showCloud_Back">
       <div class="clr-col-12">
           <button class="btn btn-outline" (click) = "back()"><label class = "back">Back</label></button>    
       </div>

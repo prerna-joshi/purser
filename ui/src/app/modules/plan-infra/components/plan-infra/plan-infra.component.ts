@@ -8,7 +8,7 @@ import { CompareService } from 'src/app/modules/compare/services/compare.service
   selector: 'app-plan-infra',
   templateUrl: './plan-infra.component.html',
   styleUrls: ['./plan-infra.component.scss'],
-  providers:[PlanInfraService]
+  providers:[PlanInfraService,CompareService]
 })
 
 export class PlanInfraComponent implements OnInit {

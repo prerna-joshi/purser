@@ -24,6 +24,5 @@ export class CompareService{
     //returns all the clouds details
     sendCloudRegion(sendCloudRegion) : Observable<any>{
       return this.http.post(this.postCloudRegion,sendCloudRegion,{withCredentials:true});
-    }
-    
+    } 
 }

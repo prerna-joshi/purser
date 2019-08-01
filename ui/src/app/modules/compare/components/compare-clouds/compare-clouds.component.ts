@@ -46,7 +46,6 @@ export class CompareCloudsComponent implements OnInit {
 
     this.setDefault();
     this.cloudsLoaded = false;
-    //this.showCompare = false;
     this.showCompare = true;
 
     this.regions = this.compareService.getRegions().subscribe(response => {
@@ -65,6 +64,7 @@ export class CompareCloudsComponent implements OnInit {
         region : ["us-east-1", "us-west-1", "us-east-2", "	us-west-2", "ap-east1", "ap-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1"],
         selectedRegion : "us-east-1"
       },
+      
       {
         cloud : "Google Cloud Platform",
         cloudName : "gcp",
@@ -83,7 +83,7 @@ export class CompareCloudsComponent implements OnInit {
         cloudName : "azure",
         region : ["eastus", "westus", "westus2", "australiaeast", "eastasia", "southeastasia", "centralus", "eastus2", "northcentralus", "southcentralus", "notheurope", "westeurope", "southindia", "centralindia", "westindia"] ,
         selectedRegion : "eastus"     
-      }
+      },
     ];
     this.cloudDetails = 
     [

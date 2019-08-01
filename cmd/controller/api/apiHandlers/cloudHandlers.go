@@ -139,6 +139,7 @@ func getNodesPlanFromListOfPods(pods []Pod) []models.Node {
 		for index, set := range sets {
 			relation = getPodSetRelation(*set, pod)
 			if relation == GOOD {
+
 				isAdded = true
 				set.addPodToSet(pod)
 				break
@@ -211,7 +212,7 @@ func convertDeploymentToListOfPods(deployment apps_v1beta1.Deployment) []Pod {
 			Name:         deployment.ObjectMeta.Name + "-" + strconv.Itoa(i),
 			App:          deployment.Spec.Template.ObjectMeta.Labels["app"],
 			Affinity:     strings.Split(deployment.Spec.Template.ObjectMeta.Labels["affinity"], ","),
-			AntiAffinity: strings.Split(deployment.Spec.Template.ObjectMeta.Labels["antiaffinity"], ","),
+			AntiAffinity: append(strings.Split(deployment.Spec.Template.ObjectMeta.Labels["antiaffinity"], ","), deployment.Spec.Template.ObjectMeta.Labels["app"]),
 			CPU:          utils.ConvertToFloat64CPU(deployment.Spec.Template.Spec.Containers[0].Resources.Requests.Cpu()),
 			Memory:       utils.ConvertToFloat64GB(deployment.Spec.Template.Spec.Containers[0].Resources.Requests.Memory()),
 		})
@@ -220,14 +221,15 @@ func convertDeploymentToListOfPods(deployment apps_v1beta1.Deployment) []Pod {
 }
 
 func getPodSetRelation(set Set, newPod Pod) int {
+	relation := NEUTRAL
 	for _, pod := range set.Pods {
 		if contains(newPod.Affinity, pod.App) {
-			return GOOD
+			relation = GOOD
 		} else if contains(newPod.AntiAffinity, pod.App) {
 			return BAD
 		}
 	}
-	return NEUTRAL
+	return relation
 }
 
 func sortSets(sets []*Set) []*Set {

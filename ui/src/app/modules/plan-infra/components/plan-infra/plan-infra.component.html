@@ -37,7 +37,7 @@
   </div>
 </div>
 
-<div class="row" *ngIf = "showCloud_Back">
+<div class="row" *ngIf = "showCloud">
     <div class="col-md-3" *ngFor = "let cloud of cloudDetails ; let c = index">
         <div class="card">
             <div class="card-block">
@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <div class="clr-row backRow" *ngIf = "showCloud_Back">
+  <div class="clr-row backRow" *ngIf = "backBtn">
       <div class="clr-col-12">
           <button class="btn btn-outline" (click) = "back()"><label class = "back">Back</label></button>    
       </div>

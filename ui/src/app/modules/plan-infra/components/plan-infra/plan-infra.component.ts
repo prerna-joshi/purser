@@ -16,12 +16,13 @@ export class PlanInfraComponent implements OnInit {
   fileToUpload: File = null;
   showBtns = true;
   enableUpload :boolean ;
-  showCloud_Back : boolean = false;
+  showCloud : boolean = false;
   cloudDetails : any[] = [];
   nodes : any[] = [];
   showDetailsModal : boolean;
   getCloudData : boolean;
   showResult : boolean;
+  backBtn : boolean = false;
 
   setDefault(){
     this.cloudDetails = 
@@ -303,7 +304,8 @@ export class PlanInfraComponent implements OnInit {
   
   uploadFileToActivity() {
     this.showBtns = false;
-    this.showCloud_Back = true;
+    this.showCloud = false;
+    this.backBtn = true;
     this.getCloudData = true;
 
     this.planInfraService.postFile(this.fileToUpload).subscribe(data => {
@@ -321,7 +323,8 @@ export class PlanInfraComponent implements OnInit {
   }
   back(){
     this.showBtns = true;
-    this.showCloud_Back = false;
+    this.showCloud = false;
+    this.backBtn = false;
     this.enableUpload = false;
     this.getCloudData = false;
   }

@@ -21,6 +21,8 @@ export class PlanInfraComponent implements OnInit {
   getCloudData : boolean;
   showResult : boolean;
   backBtn : boolean = false;
+  cloudData : boolean = false;
+  selectedCloud : any;
 
   setDefault(){
     this.cloudDetails = 
@@ -30,7 +32,7 @@ export class PlanInfraComponent implements OnInit {
       {
 
     
-        "cloud": "aws",
+        "cloud": "Amazon Web Services",
     
         "existingCost": 1000,
     
@@ -122,7 +124,7 @@ export class PlanInfraComponent implements OnInit {
     
       {
     
-        "cloud": "gcp",
+        "cloud": "Google Cloud Platform",
     
         "existingCost": 1000,
     
@@ -162,7 +164,7 @@ export class PlanInfraComponent implements OnInit {
     
       {
     
-        "cloud": "pks",
+        "cloud": "Pivotal Container Service",
     
         "existingCost": 1000,
     
@@ -203,7 +205,7 @@ export class PlanInfraComponent implements OnInit {
       {
 
     
-        "cloud": "azure",
+        "cloud": "Azure",
     
         "existingCost": 1000,
     
@@ -334,6 +336,7 @@ export class PlanInfraComponent implements OnInit {
   }
 
   showCloudDetails(cloud){
-        
+        this.cloudData = true;
+        this.selectedCloud = this.cloudDetails[cloud];
   }
 }

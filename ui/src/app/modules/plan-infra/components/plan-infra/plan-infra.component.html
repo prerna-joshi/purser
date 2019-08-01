@@ -23,7 +23,7 @@
                 </div>
                 <div class="clr-row">
                         <div class="clr-col-12">
-                            <label class = "cloudTitle">{{cloud.cloud}}</label>                            
+                            <label class = "cloudTitle">{{cloud.cloudName}}</label>                            
                         </div>
                 </div>
                 <div class="card-text cloudRow">
@@ -91,3 +91,19 @@
           <button type="button" class="btn btn-outline" (click)="showDetailsModal = false">Done</button>
       </div>
   </clr-modal>
+
+  <clr-modal [(clrModalOpen)]="cloudData">
+        <h3 class="modal-title"><label style = "color : #004A70; font-weight: bold;font-size : 20px">{{selectedCloud.cloud}}</label></h3>
+        <div class="modal-body">
+                
+                <div>CPU : {{selectedCloud.cpu}} vCPU</div>
+                <div>CPU Cost: {{selectedCloud.cpuCost.toFixed(2)}} $/month</div>
+                <div>Memory : {{selectedCloud.memory}} GB</div>
+                <div>Memory Cost : {{selectedCloud.memoryCost.toFixed(2)}} $/month</div>
+                <div class = "cost">Total Cost : {{selectedCloud.totalCost.toFixed(2)}} $/month</div>
+                <div><button class="btn btn-success-outline" (click) = "showDetails(cloud)">View Details</button></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="cloudData = false">Done</button>
+        </div>
+    </clr-modal>

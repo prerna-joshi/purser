@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { Observable } from 'rxjs';
 import { PlanInfraService } from '../../services/plan-infra.service';
+import { CompareService } from 'src/app/modules/compare/services/compare.service';
 
 @Component({
   selector: 'app-plan-infra',
@@ -279,9 +280,7 @@ export class PlanInfraComponent implements OnInit {
     }
   ]
 
-  
-
-  constructor(private planInfraService : PlanInfraService) { }
+  constructor(private planInfraService : PlanInfraService, private compareService : CompareService) { }
 
   ngOnInit() {
     this.enableUpload = false;
@@ -305,6 +304,11 @@ export class PlanInfraComponent implements OnInit {
       cd.costPercent = ((cd.costDiff / cd.existingCost) * 100).toFixed(2);
     }
 
+    this.compareService.sendCloudRegion(null).subscribe(data => {
+      console.log(data);
+      this.cloudDetails = data;
+  });
+
     this.planInfraService.postFile(this.fileToUpload).subscribe(data => {
         console.log("Uploaded File successfully");
       }, error => {
@@ -319,7 +323,6 @@ export class PlanInfraComponent implements OnInit {
   }
   showDetails(cloud){
     this.nodes = cloud.nodes;
-
     this.showDetailsModal = true;
   }
 }

@@ -21,6 +21,7 @@ export class PlanInfraComponent implements OnInit {
   cloudDetails : any[] = [];
   nodes : any[] = [];
   showDetailsModal : boolean;
+  getCloudData : boolean;
 
   setDefault(){
     this.cloudDetails = 
@@ -284,6 +285,7 @@ export class PlanInfraComponent implements OnInit {
 
   ngOnInit() {
     this.enableUpload = false;
+    this.getCloudData = false;
     this.setDefault();
   }
 
@@ -296,9 +298,11 @@ export class PlanInfraComponent implements OnInit {
     this.showBtns = false;
     this.backBtn = true;
     this.showCloud = true;
+    this.getCloudData = true;
 
     this.planInfraService.postFile(this.fileToUpload).subscribe(data => {
         console.log("Uploaded File successfully");
+        this.getCloudData = false;
         this.cloudDetails = data;
         /*for(let cd of this.cloudDetails){
           cd.costDiff = (cd.existingCost - cd.totalCost);
@@ -313,6 +317,7 @@ export class PlanInfraComponent implements OnInit {
     this.backBtn = false;
     this.showCloud = false;
     this.enableUpload = false;
+    this.getCloudData = false;
   }
   showDetails(cloud){
     this.nodes = cloud.nodes;

@@ -83,14 +83,14 @@
                         <clr-dg-column>Memory Cost ($/month)</clr-dg-column>
                         <clr-dg-column>Total Cost ($/month)</clr-dg-column>
                     
-                        <clr-dg-row *ngFor="let node of nodes">
-                            <clr-dg-cell>{{selectedNode.instanceType}}</clr-dg-cell>
-                            <clr-dg-cell>{{selectedNode.os}}</clr-dg-cell>
-                            <clr-dg-cell>{{selectedNode.cpuNode.toFixed(2)}}</clr-dg-cell>
-                            <clr-dg-cell>{{selectedNode.memoryNode.toFixed(2)}}</clr-dg-cell>
-                            <clr-dg-cell>{{selectedNode.cpuNodeCost.toFixed(2)}}</clr-dg-cell>
-                            <clr-dg-cell>{{selectedNode.memoryNodeCost.toFixed(2)}}</clr-dg-cell>
-                            <clr-dg-cell>{{selectedNode.totalNodeCost.toFixed(2)}}</clr-dg-cell>
+                        <clr-dg-row *ngFor="let node of selectedNode">
+                            <clr-dg-cell>{{node.instanceType}}</clr-dg-cell>
+                            <clr-dg-cell>{{node.os}}</clr-dg-cell>
+                            <clr-dg-cell>{{node.cpuNode.toFixed(2)}}</clr-dg-cell>
+                            <clr-dg-cell>{{node.memoryNode.toFixed(2)}}</clr-dg-cell>
+                            <clr-dg-cell>{{node.cpuNodeCost.toFixed(2)}}</clr-dg-cell>
+                            <clr-dg-cell>{{node.memoryNodeCost.toFixed(2)}}</clr-dg-cell>
+                            <clr-dg-cell>{{node.totalNodeCost.toFixed(2)}}</clr-dg-cell>
                         </clr-dg-row>
                     </clr-datagrid>
         </div>

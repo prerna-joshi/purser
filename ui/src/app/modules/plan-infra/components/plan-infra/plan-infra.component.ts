@@ -333,6 +333,7 @@ export class PlanInfraComponent implements OnInit {
 
   showDetails(selectedNode){
       this.selectedNode = selectedNode;
+      console.log("---selected node---" + JSON.stringify(this.selectedNode));
       this.viewDetails  = true;
   }
 

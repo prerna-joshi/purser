@@ -51,6 +51,7 @@ import { PlanInfraModule } from './modules/plan-infra/plan-infra.module';
         WhatIfModule,
         CompareModule,
         PlanInfraModule,
+        BrowserAnimationsModule,
         GoogleChartsModule.forRoot()
     ],
     providers: [ CookieService ],

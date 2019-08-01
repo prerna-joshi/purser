@@ -23,13 +23,16 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/vmware/purser/pkg/controller/dgraph/models"
+	"github.com/vmware/purser/pkg/pricing"
 )
 
 // GetCloudRegionList listens on /api/clouds/regions endpoint
 func GetCloudRegionList(w http.ResponseWriter, r *http.Request) {
-	addHeaders(&w, r)
-	regionsData := ""
-	encodeAndWrite(w, regionsData)
+	addAccessControlHeaders(&w, r)
+	logrus.Printf("Update regions")
+	pricing.PopulateAllRateCards()
+	logrus.Printf("All records updated")
+	// encodeAndWrite(w,)
 }
 
 // CompareCloud listens on /api/clouds/compare endpoint
@@ -59,13 +62,13 @@ func CompareCloud(w http.ResponseWriter, r *http.Request) {
 // InfrastructurePlanning ...
 func InfrastructurePlanning(w http.ResponseWriter, r *http.Request) {
 	addAccessControlHeaders(&w, r)
-	groupData, err := convertRequestBodyToJSON(r)
-	if err != nil {
-		logrus.Errorf("unable to parse request as either JSON or YAML, err: %v", err)
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	encodeAndWrite(w, string(groupData))
+	// groupData, err := convertRequestBodyToJSON(r)
+	// if err != nil {
+	// 	logrus.Errorf("unable to parse request as either JSON or YAML, err: %v", err)
+	// 	http.Error(w, err.Error(), http.StatusBadRequest)
+	// 	return
+	// }
+	// encodeAndWrite(w, string(groupData))
 	// yaml
 	// convert to JSON
 	// JSON to goStruct

@@ -61,26 +61,6 @@ func TestRateCards() {
 	// fmt.Printf("%#v", costs)
 }
 
-//PopulateAllRateCards take region as input and saves the rate card for all cloud providers
-func PopulateAllRateCards() {
-	awsRegions := []string{"us-east-1", "us-west-1"}
-	azureRegions := []string{"eastus", "westus"}
-	gcpRegions := []string{"us-east1", "us-west1"}
-	pksRegions := []string{"US-East-1", "US-West-2"}
-	for _, region := range awsRegions {
-		go models.StoreRateCard(aws.GetRateCardForAWS(region))
-	}
-	for _, region := range azureRegions {
-		go models.StoreRateCard(azure.GetRateCardForAzure(region))
-	}
-	for _, region := range gcpRegions {
-		go models.StoreRateCard(gcp.GetRateCardForGCP(region))
-	}
-	for _, region := range pksRegions {
-		go models.StoreRateCard(pks.GetRateCardForPKS(region))
-	}
-}
-
 //PopulateRateCard ...
 func PopulateRateCard(region string, cloudProvider string) {
 	var rateCard *models.RateCard
@@ -121,4 +101,24 @@ func InfraPlanningService() []models.Cost {
 	nodes, cloudRegions := Planner()
 	logrus.Printf("%#v %#v", nodes, cloudRegions)
 	return models.GetCost(nodes, cloudRegions)
+}
+
+//PopulateAllRateCards take region as input and saves the rate card for all cloud providers
+func PopulateAllRateCards() {
+	awsRegions := []string{"us-east-1", "us-west-1", "us-east-2", "	us-west-2", "ap-east1", "ap-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1"}
+	azureRegions := []string{"eastus", "westus", "westus2", "australiaeast", "eastasia", "southeastasia", "centralus", "eastus2", "northcentralus", "southcentralus", "notheurope", "westeurope", "southindia", "centralindia", "westindia"}
+	gcpRegions := []string{"us-east1", "us-west1", "asia-east1", "asia-east2", "asia-northeast1", "asia-southeast1", "us-east1", "us-east4", "europe-west1", "us-west1"}
+	pksRegions := []string{"US-East-1", "US-West-2", "EU-West-1"}
+	for _, region := range awsRegions {
+		go models.StoreRateCard(aws.GetRateCardForAWS(region))
+	}
+	for _, region := range azureRegions {
+		go models.StoreRateCard(azure.GetRateCardForAzure(region))
+	}
+	for _, region := range gcpRegions {
+		go models.StoreRateCard(gcp.GetRateCardForGCP(region))
+	}
+	for _, region := range pksRegions {
+		go models.StoreRateCard(pks.GetRateCardForPKS(region))
+	}
 }

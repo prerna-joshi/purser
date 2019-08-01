@@ -24,10 +24,16 @@
 
 <div class="clr-row inputFile" >
   <div class="clr-col-12">
-      <input type="file" id="myFile" multiple (change)="handleFileInput($event.target.files)">
+      <input type="file" *ngIf = "showBtns" id="myFile" multiple (change)="handleFileInput($event.target.files)">
   </div>
   <div class="clr-col-12">    
-      <button class="btn btn-primary " (click)="uploadFileToActivity()">Upload</button>
+      <button class="btn btn-primary " (click)="uploadFileToActivity()" *ngIf = "showBtns" [disabled]="!enableUpload">Upload & Run</button>
   </div>
+</div>
+
+<div class="clr-row backRow" *ngIf = "backBtn">
+    <div class="clr-col-12">
+        <button class="btn btn-outline" (click) = "back()"><label class = "back">Back</label></button>    
+    </div>
 </div>
 

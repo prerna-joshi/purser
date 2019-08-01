@@ -9,9 +9,13 @@ import { PlanInfraService } from '../../services/plan-infra.service';
   styleUrls: ['./plan-infra.component.scss'],
   providers:[PlanInfraService]
 })
+
 export class PlanInfraComponent implements OnInit {
 
   fileToUpload: File = null;
+  showBtns = true;
+  enableUpload :boolean ;
+  backBtn :boolean= false;
 
   cloudRegions = [
     {
@@ -55,19 +59,28 @@ export class PlanInfraComponent implements OnInit {
   constructor(private planInfraService : PlanInfraService) { }
 
   ngOnInit() {
+    this.enableUpload = false;
   }
 
   handleFileInput(files: FileList) {
+    console.log("---before-----");
     this.fileToUpload = files.item(0);
+    this.enableUpload = true;
+    console.log("------after-------");
   }
   
   uploadFileToActivity() {
+    this.showBtns = false;
+    this.backBtn = true;
     this.planInfraService.postFile(this.fileToUpload).subscribe(data => {
-      // do something, if upload success
+        console.log("Uploaded File successfully");
       }, error => {
         console.log(error);
       });
   }
-
-
+  back(){
+    this.showBtns = true;
+    this.backBtn = false;
+    this.enableUpload = false;
+  }
 }

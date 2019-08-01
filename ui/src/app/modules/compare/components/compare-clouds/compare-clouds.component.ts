@@ -1,12 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CompareService } from '../../services/compare.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-compare-clouds',
   templateUrl: './compare-clouds.component.html',
   styleUrls: ['./compare-clouds.component.scss'],
   providers:[CompareService],
-  animations : []
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({transform: 'translateY(-100%)'}),
+        animate('200ms ease-in', style({transform: 'translateY(0%)'}))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in', style({transform: 'translateY(-100%)'}))
+      ])
+    ])
+  ]
 })
 export class CompareCloudsComponent implements OnInit {
 
@@ -21,6 +32,7 @@ export class CompareCloudsComponent implements OnInit {
   costDiff : any[] = [];
   cloudsLoaded : boolean;
   showCompare : boolean;
+  visible : boolean = false;
 
   detailsResponse : any[] = [];
 
@@ -304,6 +316,7 @@ export class CompareCloudsComponent implements OnInit {
     this.showBtn = false;
     this.cloudsLoaded = true;
     this.showCloud = true;
+    this.visible =true;
      
     for(let cd of this.cloudDetails){
       cd.costDiff = (cd.existingCost - cd.totalCost);

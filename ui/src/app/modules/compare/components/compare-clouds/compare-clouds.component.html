@@ -60,7 +60,7 @@
 
 <div class="clr-row btnRow" *ngIf = "showBtn">
     <div class="clr-col-12">
-      <button class="btn btn-primary" (click) = "showClouds()"><label class = "run">Run</label></button>      
+        <button [clrLoading]="cloudsLoaded" class="btn btn-info-outline" (click)="showClouds()">Run</button>  
     </div>
 </div>
 

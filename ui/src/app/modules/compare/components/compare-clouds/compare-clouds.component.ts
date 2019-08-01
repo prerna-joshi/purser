@@ -9,7 +9,8 @@ import { setDefaultService } from 'selenium-webdriver/opera';
   selector: 'app-compare-clouds',
   templateUrl: './compare-clouds.component.html',
   styleUrls: ['./compare-clouds.component.scss'],
-  providers:[CompareService]
+  providers:[CompareService],
+  animations : []
 })
 export class CompareCloudsComponent implements OnInit {
 
@@ -22,6 +23,7 @@ export class CompareCloudsComponent implements OnInit {
   cloudRegions : any[] = [];
   diffPercent : any[] = [];
   costDiff : any[] = [];
+  cloudsLoaded : boolean;
 
   detailsResponse : any[] = [];
 
@@ -47,6 +49,7 @@ export class CompareCloudsComponent implements OnInit {
   ngOnInit() {
 
     this.setDefault();
+    this.cloudsLoaded = false;
 
     this.regions = this.compareService.getRegions().subscribe(response => {
       console.log("Regions for clouds" + response);
@@ -58,26 +61,26 @@ export class CompareCloudsComponent implements OnInit {
 
     this.cloudRegions = [
       {
-        cloudName : "Amazon Web Services",
-        cloud : "aws",
+        cloud : "Amazon Web Services",
+        cloudName : "aws",
         region : ["us-east-1", "us-west-1", "us-east-2", "	us-west-2", "ap-east1", "ap-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1"],
         selectedRegion : "us-east-1"
       },
       {
-        cloudName : "Google Cloud Platform",
-        cloud : "gcp",
+        cloud : "Google Cloud Platform",
+        cloudName : "gcp",
         region : ["us-east1", "us-west1","asia-east1","asia-east2","asia-northeast1","asia-southeast1","us-east1","us-east4","europe-west1","us-west1"],
         selectedRegion : "us-east1"      
       },
       {
-        cloudName : "Pivotal Container Service",
-        cloud : "pks",
+        cloud : "Pivotal Container Service",
+        cloudName : "pks",
         region : ["US-East-1", "US-West-2", "EU-West-1"],
         selectedRegion : "US-East-1"
       },
       {
-        cloudName : "Microsoft Azure",
-        cloud : "azure",
+        cloud : "Microsoft Azure",
+        cloudName : "azure",
         region : ["eastus", "westus", "westus2", "australiaeast", "eastasia", "southeastasia", "centralus", "eastus2", "northcentralus", "southcentralus", "notheurope", "westeurope", "southindia", "centralindia", "westindia"] ,
         selectedRegion : "eastus"     
       }
@@ -299,14 +302,14 @@ export class CompareCloudsComponent implements OnInit {
   showClouds(){
 
     this.showBtn = false;
-
-    this.showCloud = true; 
-    /* 
+    this.cloudsLoaded = true;
+    this.showCloud = true;
+     
     for(let cd of this.cloudDetails){
       cd.costDiff = (cd.existingCost - cd.totalCost);
       cd.costPercent = ((cd.costDiff / cd.existingCost) * 100).toFixed(2);
     }
-    */
+    
     /*
     for(var c in this.cloudRegions ){
       this.sendCloudRegion.push({
@@ -318,11 +321,13 @@ export class CompareCloudsComponent implements OnInit {
     this.compareService.regions = this.cloudRegions;
 
     this.compareService.sendCloudRegion(this.cloudRegions).subscribe(data => {
+      /*
       for(let cd of this.cloudDetails){
         cd.costDiff = (cd.existingCost - cd.totalCost);
         cd.costPercent = ((cd.costDiff / cd.existingCost) * 100).toFixed(2);
-      }
+      }*/
         this.cloudDetails = data;
+        this.cloudsLoaded = false;
     });
   }
 
@@ -334,6 +339,7 @@ export class CompareCloudsComponent implements OnInit {
   back(){
     this.showBtn = true;
     this.showCloud = false;
+    this.cloudsLoaded = false;
     this.setDefault();
   }
 }

@@ -8,7 +8,7 @@ import { CompareService } from 'src/app/modules/compare/services/compare.service
   selector: 'app-plan-infra',
   templateUrl: './plan-infra.component.html',
   styleUrls: ['./plan-infra.component.scss'],
-  providers:[PlanInfraService,CompareService]
+  providers:[PlanInfraService, CompareService]
 })
 
 export class PlanInfraComponent implements OnInit {
@@ -302,10 +302,10 @@ export class PlanInfraComponent implements OnInit {
     this.planInfraService.postFile(this.fileToUpload).subscribe(data => {
         console.log("Uploaded File successfully");
         this.cloudDetails = data;
-        for(let cd of this.cloudDetails){
+        /*for(let cd of this.cloudDetails){
           cd.costDiff = (cd.existingCost - cd.totalCost);
           cd.costPercent = ((cd.costDiff / cd.existingCost) * 100).toFixed(2);
-        }
+        }*/
       }, error => {
         console.log(error);
       });

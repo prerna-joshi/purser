@@ -299,13 +299,6 @@ export class PlanInfraComponent implements OnInit {
     this.backBtn = true;
     this.showCloud = true;
 
-    
-
-  //   this.compareService.sendCloudRegion(null).subscribe(data => {
-  //     console.log(data);
-  //     this.cloudDetails = data;
-  // });
-
     this.planInfraService.postFile(this.fileToUpload).subscribe(data => {
         console.log("Uploaded File successfully");
         this.cloudDetails = data;

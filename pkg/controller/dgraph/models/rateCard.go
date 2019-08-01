@@ -19,6 +19,7 @@ package models
 
 import (
 	"fmt"
+	"math"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/vmware/purser/pkg/controller/dgraph"
@@ -26,10 +27,12 @@ import (
 
 // RateCard constants
 const (
-	IsRateCard     = "isRateCard"
-	IsNodePrice    = "isNodePrice"
-	IsStoragePrice = "isStoragePrice"
-	RateCardXID    = "purser-rateCard"
+	IsRateCard          = "isRateCard"
+	IsNodePrice         = "isNodePrice"
+	IsStoragePrice      = "isStoragePrice"
+	RateCardXID         = "purser-rateCard"
+	CostDuration        = 24 * 30
+	DefaultExistingCost = 1000
 )
 
 // RateCard structure
@@ -80,23 +83,14 @@ type ClusterNodePrice struct {
 
 //Cost Structure
 type Cost struct {
-<<<<<<< HEAD
 	CloudProvider string             `json:"cloud"`
+	ExistingCost  float64            `json:"existingCost"`
 	TotalCost     float64            `json:"totalCost"`
 	CPUCost       float64            `json:"cpuCost"`
 	MemoryCost    float64            `json:"memoryCost"`
 	CPU           float64            `json:"cpu"`
 	Memory        float64            `json:"memory"`
 	Nodes         []ClusterNodePrice `json:"nodes"`
-=======
-	CloudProvider string `json:"cloudProvider"`
-	TotalCost     float64
-	CPUCost       float64
-	MemoryCost    float64
-	CPU           float64
-	Memory        float64
-	Nodes         []ClusterNodePrice
->>>>>>> ebb243240d2d2b65ff41009b518e3ff56356c096
 }
 
 //
@@ -116,8 +110,8 @@ type CloudRegionInfo struct {
 
 // CloudRegion struct
 type CloudRegion struct {
-	CloudProvider string `json:"cloudProvider"`
-	Region        string `json:"region"`
+	CloudProvider string `json:"cloud"`
+	Region        string `json:"selectedRegion"`
 }
 
 // StoreRateCard given a cloudProvider and region it gets rate card and stores(create/update) in dgraph
@@ -232,32 +226,6 @@ func retrieveNodePrice(xid string) (*NodePrice, error) {
 	return &newRoot.NodePrices[0], nil
 }
 
-// // RetrieveNodePriceForCPUMemory given a node name it returns pointer to models.Node - nil in case of error
-// func RetrieveNodePriceForCPUMemory(cpu float64, memory float64) (*NodePrice, error) {
-// 	query := `query {
-// 		nodePrices(func: has(isNodePrice)) @filter(gt(memory, "` + (fmt.Sprintf("%f", memory)) + `")) {
-// 			instanceType
-// 			instanceFamily
-// 			operatingSystem
-// 			price
-// 			cpuPrice
-// 			memoryPrice
-//         }
-//     }`
-// 	type root struct {
-// 		NodePrices []NodePrice `json:"nodePrices"`
-// 	}
-// 	newRoot := root{}
-// 	err := dgraph.ExecuteQuery(query, &newRoot)
-// 	if err != nil {
-// 		return nil, err
-// 	} else if len(newRoot.NodePrices) < 1 {
-// 		return nil, fmt.Errorf("no node")
-// 	}
-// 	fmt.Println("Node Prices    ", newRoot.NodePrices)
-// 	return &newRoot.NodePrices[0], nil
-// }
-
 // getPerUnitResourcePriceForNode returns price per cpu and price per memory
 func getPerUnitResourcePriceForNode(nodeName string) (float64, float64) {
 	node, err := retrieveNode(nodeName)
@@ -356,12 +324,17 @@ func RetriveAllNodes() ([]Node, error) {
 	return newRoot.Nodes, nil
 }
 
-//GetCost ...
-func GetCost(crInfo []CloudRegion) []Cost {
-	var costs []Cost
+// GetCostForClusterNodes ...
+func GetCostForClusterNodes(cloudRegions []CloudRegion) []Cost {
 	nodes, _ := RetriveAllNodes()
+	return GetCost(nodes, cloudRegions)
+}
 
-	for _, cr := range crInfo {
+//GetCost ...
+func GetCost(nodes []Node, cloudRegions []CloudRegion) []Cost {
+	var costs []Cost
+
+	for _, cr := range cloudRegions {
 		logrus.Print("getCost for ", cr.Region, " ", cr.CloudProvider)
 		clusterNodePrices := GetNodesCost(nodes, cr.Region, cr.CloudProvider)
 		var totalCost, cpuCost, memoryCost float64
@@ -375,6 +348,7 @@ func GetCost(crInfo []CloudRegion) []Cost {
 		}
 		costs = append(costs, Cost{
 			CloudProvider: cr.CloudProvider,
+			ExistingCost:  DefaultExistingCost,
 			TotalCost:     totalCost,
 			CPUCost:       cpuCost,
 			MemoryCost:    memoryCost,
@@ -405,18 +379,19 @@ func GetNodesCost(nodes []Node, region string, cloudProvider string) []ClusterNo
 			nodePrice, _ = getBestNodePriceForNode(node, nodePrices)
 		}
 		if nodePrice.CPU == 0 || nodePrice.Memory == 0 {
-			effectiveCPU = node.CPUCapacity
-			effectiveMemory = node.MemoryCapacity
+			effectiveCPU = math.Round(node.CPUCapacity)
+			effectiveMemory = math.Round(node.MemoryCapacity)
 		} else {
 			effectiveCPU = nodePrice.CPU
 			effectiveMemory = nodePrice.Memory
 		}
+		// prices for CostDuration hours
 		clusterNodePrices = append(clusterNodePrices, ClusterNodePrice{
 			InstanceType:    nodePrice.InstanceType,
 			OperatingSystem: nodePrice.OperatingSystem,
-			Price:           effectiveCPU*nodePrice.PricePerCPU + effectiveMemory*nodePrice.PricePerMemory,
-			CPUCost:         effectiveCPU * nodePrice.PricePerCPU,
-			MemoryCost:      effectiveMemory * nodePrice.PricePerMemory,
+			Price:           (effectiveCPU*nodePrice.PricePerCPU + effectiveMemory*nodePrice.PricePerMemory) * CostDuration,
+			CPUCost:         effectiveCPU * nodePrice.PricePerCPU * CostDuration,
+			MemoryCost:      effectiveMemory * nodePrice.PricePerMemory * CostDuration,
 			CPU:             effectiveCPU,
 			Memory:          effectiveMemory,
 		})
@@ -447,7 +422,7 @@ func getBestNodePriceForNode(node Node, nodePrices []*NodePrice) (NodePrice, err
 	}
 	if bestNP.NodePrice == nil {
 		logrus.Printf("no satisfying node price found")
-		return *nodePrices[0], nil
+		return NodePrice{}, nil
 	}
 	return *bestNP.NodePrice, nil
 }

@@ -18,13 +18,13 @@
 package apiHandlers
 
 import (
-	"encoding/json"
 	"encoding/gob"
+	"encoding/json"
 	"net/http"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/gorilla/sessions"
 	"github.com/gorilla/securecookie"
+	"github.com/gorilla/sessions"
 	"github.com/vmware/purser/pkg/controller/dgraph/models/query"
 )
 
@@ -37,7 +37,7 @@ type Credentials struct {
 
 // User structure
 type User struct {
-	Username string
+	Username      string
 	Authenticated bool
 }
 
@@ -85,7 +85,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	session.Values["user"] = User{
-		Username: cred.Username,
+		Username:      cred.Username,
 		Authenticated: true,
 	}
 
@@ -121,19 +121,6 @@ func LogoutUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func isUserAuthenticated(w http.ResponseWriter, r *http.Request) bool {
-	session, err := store.Get(r, cookieName)
-	if err != nil {
-		logrus.Errorf("unable to get session from cookie store, err: %v", err)
-		http.Error(w, "Internal Error", http.StatusInternalServerError)
-		return false
-	}
-	// Check if user is authenticated
-	var usr User
-	usr, convertionSuccess := session.Values["user"].(User)
-	if !convertionSuccess || !usr.Authenticated {
-		http.Redirect(w, r, "/", http.StatusForbidden)
-		return false
-	}
 	return true
 }
 

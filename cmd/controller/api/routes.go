@@ -264,4 +264,10 @@ var routes = Routes{
 		"/api/clouds/compare",
 		apiHandlers.CompareCloud,
 	},
+	Route{
+        "InfrastructurePlanning",
+        "POST",
+        "/api/clouds/infrastructurePlanning",
+        apiHandlers.InfrastructurePlanning,
+    },
 }

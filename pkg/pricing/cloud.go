@@ -102,3 +102,23 @@ func PopulateRateCard(region string, cloudProvider string) {
 	}
 
 }
+
+// Planner ...
+func Planner() ([]models.Node, []models.CloudRegion) {
+	nodes := []models.Node{
+		models.Node{CPUCapacity: 2, MemoryCapacity: 2},
+		models.Node{CPUCapacity: 4, MemoryCapacity: 4},
+	}
+	cloudRegions := []models.CloudRegion{
+		models.CloudRegion{CloudProvider: models.AWS, Region: "us-east-1"},
+		models.CloudRegion{CloudProvider: models.GCP, Region: "us-east1"},
+	}
+	return nodes, cloudRegions
+}
+
+// InfraPlanningService ...
+func InfraPlanningService() []models.Cost {
+	nodes, cloudRegions := Planner()
+	logrus.Printf("%#v %#v", nodes, cloudRegions)
+	return models.GetCost(nodes, cloudRegions)
+}

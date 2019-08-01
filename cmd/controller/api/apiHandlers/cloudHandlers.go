@@ -34,7 +34,7 @@ func GetCloudRegionList(w http.ResponseWriter, r *http.Request) {
 
 // CompareCloud listens on /api/clouds/compare endpoint
 func CompareCloud(w http.ResponseWriter, r *http.Request) {
-	addHeaders(&w, r)
+	addAccessControlHeaders(&w, r)
 	queryParams := r.URL.Query()
 	logrus.Debugf("Query params: (%v)", queryParams)
 
@@ -52,6 +52,23 @@ func CompareCloud(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	logrus.Printf("region  %#v ", region)
-	nodeCost := models.GetCost(region)
+	nodeCost := models.GetCostForClusterNodes(region)
 	encodeAndWrite(w, nodeCost)
+}
+
+// InfrastructurePlanning ...
+func InfrastructurePlanning(w http.ResponseWriter, r *http.Request) {
+	addAccessControlHeaders(&w, r)
+	groupData, err := convertRequestBodyToJSON(r)
+	if err != nil {
+		logrus.Errorf("unable to parse request as either JSON or YAML, err: %v", err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	encodeAndWrite(w, string(groupData))
+	// yaml
+	// convert to JSON
+	// JSON to goStruct
+	nodesRecommender := pricing.InfraPlanningService()
+	encodeAndWrite(w, nodesRecommender)
 }

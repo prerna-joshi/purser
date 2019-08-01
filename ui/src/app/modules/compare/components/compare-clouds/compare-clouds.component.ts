@@ -65,28 +65,47 @@ export class CompareCloudsComponent implements OnInit {
   }
 
   setDefault(){
-    this.sendCloudRegion = [];
+    this.sendCloudRegion = [{
+      "region":"us-east-1",
+      "cloud" : "aws"
+    },
+    {
+        "region":"westus",
+        "cloud" : "azure"
+    },{
+      "region":"us-east1",
+      "cloud":"gcp"
+    },
+    {
+      "region":"US-East-1",
+      "cloud":"pks"
+    }
+    ];
 
     this.cloudRegions = [
       {
-        cloud : "Amazon Web Services",
-        region : ["US-East-1", "US-West-2", "EU-West-1"],
+        cloudName : "Amazon Web Services",
+        cloud : "aws",
+        region : ["us-east-1", "us-west-1"],
+        selectedRegion : "us-east-1"
+      },
+      {
+        cloudName : "Google Cloud Platform",
+        cloud : "gcp",
+        region : ["us-east1", "us-west1"],
+        selectedRegion : "us-east1"      
+      },
+      {
+        cloudName : "Pivotal Container Service",
+        cloud : "pks",
+        region : ["US-East-1", "US-West-2"],
         selectedRegion : "US-East-1"
       },
       {
-        cloud : "Google Cloud Platform",
-        region : ["US-East-1", "US-West-2", "EU-West-1"],
-        selectedRegion : "US-East-1"      
-      },
-      {
-        cloud : "Pivotal Container Service",
-        region : ["US-East-1", "US-West-2", "EU-West-1"],
-        selectedRegion : "US-East-1"
-      },
-      {
-        cloud : "Microsoft Azure",
-        region : ["US-East-1", "US-West-2", "EU-West-1"] ,
-        selectedRegion : "US-East-1"     
+        cloudName : "Microsoft Azure",
+        cloud : "azure",
+        region : ["eastus", "westus"] ,
+        selectedRegion : "eastus"     
       }
     ];
     this.cloudDetails = [
@@ -96,7 +115,7 @@ export class CompareCloudsComponent implements OnInit {
         cpuCost : 100,
         memory : 20,
         memoryCost : 40,
-        totalCost : 100,
+        totalCost : 500,
         existingCost : 20
       },
       {
@@ -105,7 +124,7 @@ export class CompareCloudsComponent implements OnInit {
         cpuCost : 100,
         memory : 20,
         memoryCost : 40,
-        totalCost : 100,
+        totalCost : 300,
         existingCost : 100
       },
       {
@@ -123,7 +142,7 @@ export class CompareCloudsComponent implements OnInit {
         cpuCost : 100,
         memory : 20,
         memoryCost : 40,
-        totalCost : 100,
+        totalCost : 200,
         existingCost : 120
       }
     ]
@@ -142,28 +161,24 @@ export class CompareCloudsComponent implements OnInit {
     this.showCloud = true;
     this.showBack = true;
     
-    for(let cd of this.cloudDetails){
-      cd.costDiff = cd.totalCost - cd.existingCost;
-      console.log("-----cloud details---" + JSON.stringify(cd));
-    }
-    /*
-    for(var c in this.cloudRegions ){
-      this.sendCloudRegion.push({
-        'cloud': this.cloudRegions[c].cloud,
-        'region': this.selectedRegions[c]
-      });
-    }
-    */
-
-    /*
-    this.compareService.sendCloudRegion(this.sendCloudRegion).subscribe(data => {
+    this.compareService.sendCloudRegion(this.cloudRegions).subscribe(data => {
         console.log(data);
+        this.cloudDetails = data;
+        this.calculateChangeInCost();
     });
-    */
-    
-    console.log("--------post data-------" + JSON.stringify(this.cloudRegions));
-  }
 
+    console.log("--------cost Percent-------" + JSON.stringify(this.cloudDetails));
+  }
+  calculateChangeInCost(){
+    for(let cd of this.cloudDetails){
+      cd.existingCost = 1;
+      cd.costDiff = (cd.totalCost - cd.existingCost).toFixed(2);
+      cd.costPercent = ((cd.costDiff / cd.totalCost) * 100).toFixed(2);
+      console.log("-----percent total cost---" + JSON.stringify(cd.totalCost));
+      console.log("-----peercent cost diff---" + JSON.stringify(cd.costDiff));
+      console.log("-----cost percent ---" + JSON.stringify(cd.costPercent));
+    } 
+  }
   showDetails(){
     this.showDetailsModal = true;
   }

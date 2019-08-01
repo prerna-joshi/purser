@@ -31,7 +31,8 @@ func StartServer(conf controller.Config) {
 	apiHandlers.SetKubeClientAndGroupClient(conf)
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedCredentials := handlers.AllowCredentials()
+	allowedMethods := handlers.AllowedMethods([]string{"POST", "GET", "OPTIONS"})
 	router := NewRouter()
 	logrus.Info("Purser server started on port `localhost:3030`")
-	logrus.Fatal(http.ListenAndServe(":3030", handlers.CORS(allowedOrigins, allowedCredentials)(router)))
+	logrus.Fatal(http.ListenAndServe(":3030", handlers.CORS(allowedOrigins, allowedCredentials, allowedMethods)(router)))
 }

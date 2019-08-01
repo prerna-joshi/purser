@@ -44,7 +44,6 @@ import { FormsModule } from '@angular/forms';
         LogicalGroupModule,
         ChangepasswordModule,
         LeftNavigationModule,
-        WhatIfModule,
         HomeModule,
         OptionsModule,
         WhatIfModule,

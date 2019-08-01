@@ -25,6 +25,8 @@ import { WhatIfModule } from './modules/what-if/what-if.module';
 import { CompareCloudsComponent } from './modules/compare/components/compare-clouds/compare-clouds.component';
 import { CompareModule } from './modules/compare/compare.module';
 import { FormsModule } from '@angular/forms';
+import { PlanInfraComponent } from './modules/plan-infra/components/plan-infra/plan-infra.component';
+import { PlanInfraModule } from './modules/plan-infra/plan-infra.module';
 
 @NgModule({
     declarations: [
@@ -48,6 +50,7 @@ import { FormsModule } from '@angular/forms';
         OptionsModule,
         WhatIfModule,
         CompareModule,
+        PlanInfraModule,
         GoogleChartsModule.forRoot()
     ],
     providers: [ CookieService ],

@@ -4,11 +4,14 @@ import { BACKEND_URL } from '../../../app.component'
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CloudRegion } from '../components/compare-clouds/cloud-region';
+import { CloudDetails } from '../components/compare-clouds/cloud-details';
 
 @Injectable()
 export class CompareService{
 
     regions : CloudRegion[] = [];
+    cloudDetails : CloudDetails[] = [];
+
     getRegionsUrl = "/clouds/regions";
     postCloudRegion =  "/api/clouds/compare";
 

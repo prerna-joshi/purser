@@ -316,32 +316,20 @@ export class CompareCloudsComponent implements OnInit {
             "memoryNode": 3.5
     
           }
-    
         ]
-    
-
       }
-    
-    ]
-        
-    /*
-    var c;
-    for(c = 0;c < this.cloudRegions.length; c++){
-        this.selectedRegions[c] = "US-East-1";
-    }
-    */  
+    ] 
   }
   
   showClouds(){
 
     this.showBtn = false;
     this.showCloud = true;
-    this.showBack = true;
-    
+    this.showBack = true;  
 
     for(let cd of this.cloudDetails){
-      cd.costDiff = (cd.totalCost - cd.existingCost).toFixed(2);
-      cd.costPercent = ((cd.costDiff / cd.totalCost) * 100).toFixed(2);
+      cd.costDiff = (cd.existingCost - cd.totalCost).toFixed(2);
+      cd.costPercent = ((cd.costDiff / cd.existingCost) * 100).toFixed(2);
     }
     /*
     for(var c in this.cloudRegions ){

@@ -4,31 +4,36 @@
   </div>
 </div>
 
+<div class="clr-row inputFile" >
+        <div class="clr-col-12">
+            <input type="file" *ngIf = "showBtns" id="myFile" multiple (change)="handleFileInput($event.target.files)">
+        </div>
+        <div class="clr-col-12">   
+            <button [clrLoading]="getCloudData" class="btn btn-info-outline" (click)="uploadFileToActivity()"  *ngIf = "showBtns" [disabled]="!enableUpload">Upload & Run</button> 
+            <!--<button class="btn btn-primary " (click)="uploadFileToActivity()" *ngIf = "showBtns" [disabled]="!enableUpload">Upload & Run</button>-->
+        </div>
+</div>
+
 <div class="row" >
-  <div class="col-md-3" *ngFor = "let cloud of cloudRegions ; let c = index">
+  <div class="col-md-5" *ngFor = "let cloud of cloudRegions ; let c = index">
         <div class="card" [ngStyle]="myStyles[c%4]">
             <div class="card-block">
                 <div class="card-title">
-                    <label style = "font-weight : bold">{{cloud.cloud}}</label>
                     <img class = "cloudImg" src = "../../../../../assets/images/{{images[c]}}">
                 </div>
-                <div class="card-text">
+                <div class="clr-row">
+                        <div class="clr-col-12">
+                            <label class = "cloudTitle">{{cloud.cloud}}</label>                            
+                        </div>
+                </div>
+                <div class="card-text cloudRow">
                   <select clrSelect name="options" [(ngModel)]="cloud.selectedRegion">
                     <option  *ngFor = "let region of cloud.region; let r = index" value = "{{region}}">{{region}}</option>
                   </select>
+                  <div class = "seeResult"><button class="btn btn-outline" [disabled] = "!showResult">See Result</button></div>
                 </div>
             </div>
         </div>      
-  </div>
-</div>
-
-<div class="clr-row inputFile" >
-  <div class="clr-col-12">
-      <input type="file" *ngIf = "showBtns" id="myFile" multiple (change)="handleFileInput($event.target.files)">
-  </div>
-  <div class="clr-col-12">   
-      <button [clrLoading]="getCloudData" class="btn btn-info-outline" (click)="uploadFileToActivity()"  *ngIf = "showBtns" [disabled]="!enableUpload">Upload & Run</button> 
-      <!--<button class="btn btn-primary " (click)="uploadFileToActivity()" *ngIf = "showBtns" [disabled]="!enableUpload">Upload & Run</button>-->
   </div>
 </div>
 

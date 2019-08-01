@@ -46,8 +46,8 @@ export class CompareCloudsComponent implements OnInit {
 
     this.setDefault();
     this.cloudsLoaded = false;
-    this.showCompare = false;
-    //this.showCompare = true;
+    //this.showCompare = false;
+    this.showCompare = true;
 
     this.regions = this.compareService.getRegions().subscribe(response => {
       this.showCompare = true;

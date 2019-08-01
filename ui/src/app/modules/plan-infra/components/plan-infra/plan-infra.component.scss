@@ -3,9 +3,20 @@
     font-weight: bold;
     color :#004A70;
 }
+/*
+.card{
+    height: 350px;
+}
+*/
+.cloudTitle{
+    font-weight: bold;
+    font-size : 20px;
+    display: flex;
+    justify-content: center;
+}
 .card-title{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 .inputFile{
     padding-top : 20px;
@@ -39,4 +50,12 @@
 }
 .cost{
     font-weight: bold;
+}
+.cloudRow{
+    display: flex;
+    justify-content: space-between;
+    padding-top : 30px;
+}
+.seeResult{
+    padding-top : 20px;
 }

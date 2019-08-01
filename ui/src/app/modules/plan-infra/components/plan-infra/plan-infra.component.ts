@@ -288,10 +288,8 @@ export class PlanInfraComponent implements OnInit {
   }
 
   handleFileInput(files: FileList){
-    console.log("---before-----");
     this.fileToUpload = files.item(0);
     this.enableUpload = true;
-    console.log("------after-------");
   }
   
   uploadFileToActivity() {

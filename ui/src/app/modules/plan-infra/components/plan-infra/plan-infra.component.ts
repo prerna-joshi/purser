@@ -17,12 +17,13 @@ export class PlanInfraComponent implements OnInit {
   showCloud : boolean = false;
   cloudDetails : any[] = [];
   nodes : any[] = [];
-  showDetailsModal : boolean;
+  viewDetails : boolean;
   getCloudData : boolean;
   showResult : boolean;
   backBtn : boolean = false;
   cloudData : boolean = false;
   selectedCloud : any;
+  selectedNode : any;
 
   setDefault(){
     this.cloudDetails = 
@@ -330,13 +331,14 @@ export class PlanInfraComponent implements OnInit {
     this.getCloudData = false;
   }
 
-  showDetails(cloud){
-    this.nodes = cloud.nodes;
-    this.showDetailsModal = true;
+  showDetails(selectedNode){
+      this.selectedNode = selectedNode;
+      this.viewDetails  = true;
   }
 
   showCloudDetails(cloud){
         this.cloudData = true;
+        this.viewDetails = false;
         this.selectedCloud = this.cloudDetails[cloud];
   }
 }

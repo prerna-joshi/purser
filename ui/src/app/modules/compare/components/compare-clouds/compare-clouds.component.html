@@ -70,11 +70,11 @@
             <clr-datagrid>
                     <clr-dg-column>Instance Type</clr-dg-column>
                     <clr-dg-column>OS</clr-dg-column>
-                    <clr-dg-column>CPU </clr-dg-column>
-                    <clr-dg-column>Memory </clr-dg-column>
-                    <clr-dg-column>CPU Cost</clr-dg-column>
-                    <clr-dg-column>Memory Cost</clr-dg-column>
-                    <clr-dg-column>Total Cost</clr-dg-column>
+                    <clr-dg-column>CPU (vCPU)</clr-dg-column>
+                    <clr-dg-column>Memory (GB) </clr-dg-column>
+                    <clr-dg-column>CPU Cost ($/month)</clr-dg-column>
+                    <clr-dg-column>Memory Cost ($/month)</clr-dg-column>
+                    <clr-dg-column>Total Cost ($/month)</clr-dg-column>
                 
                     <clr-dg-row *ngFor="let node of nodes">
                         <clr-dg-cell>{{node.instanceType}}</clr-dg-cell>

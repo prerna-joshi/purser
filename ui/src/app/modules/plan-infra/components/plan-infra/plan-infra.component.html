@@ -30,7 +30,7 @@
                   <select clrSelect name="options" [(ngModel)]="cloud.selectedRegion">
                     <option  *ngFor = "let region of cloud.region; let r = index" value = "{{region}}">{{region}}</option>
                   </select>
-                  <div class = "seeResult"><button class="btn btn-primary" [disabled] = "!showResult">See Result</button></div>
+                  <div class = "seeResult" id = "{{c}}"><button class="btn btn-primary" [disabled] = "!showResult" (click) = "showCloudDetails(c)">See Result</button></div>
                 </div>
             </div>
         </div>      

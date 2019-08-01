@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CloudRegion } from './cloud-region';
 import { CompareService } from '../../services/compare.service';
-import { Observable } from 'rxjs';
-import { CloudDetails } from './cloud-details';
-import { setDefaultService } from 'selenium-webdriver/opera';
 
 @Component({
   selector: 'app-compare-clouds',
@@ -24,9 +20,9 @@ export class CompareCloudsComponent implements OnInit {
   diffPercent : any[] = [];
   costDiff : any[] = [];
   cloudsLoaded : boolean;
+  showCompare : boolean;
 
   detailsResponse : any[] = [];
-
 
   images = ["awst.png", "gcpt.png", "pkst.png", "azuret.png"];
 
@@ -50,8 +46,10 @@ export class CompareCloudsComponent implements OnInit {
 
     this.setDefault();
     this.cloudsLoaded = false;
+    this.showCompare = false;
 
     this.regions = this.compareService.getRegions().subscribe(response => {
+      this.showCompare = true;
       console.log("Regions for clouds" + response);
     });
 

@@ -1,3 +1,5 @@
+<span class="spinner" *ngIf = "!showCompare">Loading...</span>
+<div *ngIf = "showCompare">
 <div class="clr-row">
     <div class="clr-col-12">
         <label class = "compareTitle">Compare Clouds</label>
@@ -89,3 +91,4 @@
         <button type="button" class="btn btn-outline" (click)="showDetailsModal = false">Done</button>
     </div>
 </clr-modal>
+</div>

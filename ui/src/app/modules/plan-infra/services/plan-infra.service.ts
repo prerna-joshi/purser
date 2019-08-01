@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 export class PlanInfraService {
 
 
-  fileUploadUrl = BACKEND_URL  + "clouds/infrastructurePlanning";
+  fileUploadUrl = "/api/clouds/infrastructurePlanning";
 
   constructor(private http: HttpClient) {}
   

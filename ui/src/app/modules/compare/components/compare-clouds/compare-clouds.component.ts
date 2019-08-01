@@ -24,7 +24,7 @@ export class CompareCloudsComponent implements OnInit {
 
   detailsResponse : any[] = [];
 
-  images = ["awst.png",  "azuret.png","gcpt.png", "pkst.png"];
+  images = ["awst.png", "gcpt.png", "pkst.png","azuret.png"];
 
   myStyles = [{
     'background-color': '#FEF3B5',

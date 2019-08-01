@@ -64,28 +64,47 @@ export class CompareCloudsComponent implements OnInit {
   }
 
   setDefault(){
-    this.sendCloudRegion = [];
+    this.sendCloudRegion = [{
+      "region":"us-east-1",
+      "cloud" : "aws"
+    },
+    {
+        "region":"westus",
+        "cloud" : "azure"
+    },{
+      "region":"us-east1",
+      "cloud":"gcp"
+    },
+    {
+      "region":"US-East-1",
+      "cloud":"pks"
+    }
+    ];
 
     this.cloudRegions = [
       {
-        cloud : "Amazon Web Services",
-        region : ["US-East-1", "US-West-2", "EU-West-1"],
+        cloudName : "Amazon Web Services",
+        cloud : "aws",
+        region : ["us-east-1", "us-west-1"],
+        selectedRegion : "us-east-1"
+      },
+      {
+        cloudName : "Google Cloud Platform",
+        cloud : "gcp",
+        region : ["us-east1", "us-west1"],
+        selectedRegion : "us-east1"      
+      },
+      {
+        cloudName : "Pivotal Container Service",
+        cloud : "pks",
+        region : ["US-East-1", "US-West-2"],
         selectedRegion : "US-East-1"
       },
       {
-        cloud : "Google Cloud Platform",
-        region : ["US-East-1", "US-West-2", "EU-West-1"],
-        selectedRegion : "US-East-1"      
-      },
-      {
-        cloud : "Pivotal Container Service",
-        region : ["US-East-1", "US-West-2", "EU-West-1"],
-        selectedRegion : "US-East-1"
-      },
-      {
-        cloud : "Microsoft Azure",
-        region : ["US-East-1", "US-West-2", "EU-West-1"] ,
-        selectedRegion : "US-East-1"     
+        cloudName : "Microsoft Azure",
+        cloud : "azure",
+        region : ["eastus", "westus"] ,
+        selectedRegion : "eastus"     
       }
     ];
     this.cloudDetails = 
@@ -93,6 +112,7 @@ export class CompareCloudsComponent implements OnInit {
     [
     
       {
+
     
         "cloud": "aws",
     
@@ -181,6 +201,7 @@ export class CompareCloudsComponent implements OnInit {
     
         ]
     
+
       },
     
       {
@@ -264,6 +285,7 @@ export class CompareCloudsComponent implements OnInit {
       },
     
       {
+
     
         "cloud": "azure",
     
@@ -301,6 +323,7 @@ export class CompareCloudsComponent implements OnInit {
     
         ]
     
+
       }
     
     ]
@@ -319,6 +342,7 @@ export class CompareCloudsComponent implements OnInit {
     this.showCloud = true;
     this.showBack = true;
     
+
     for(let cd of this.cloudDetails){
       cd.costDiff = (cd.totalCost - cd.existingCost).toFixed(2);
       cd.costPercent = ((cd.costDiff / cd.totalCost) * 100).toFixed(2);
@@ -340,6 +364,7 @@ export class CompareCloudsComponent implements OnInit {
 
   showDetails(cloud){
     this.nodes = cloud.nodes;
+
     this.showDetailsModal = true;
   }
 

@@ -19,13 +19,14 @@ package apiHandlers
 
 import (
 	"encoding/json"
-	"github.com/Sirupsen/logrus"
 	"io"
 	"io/ioutil"
-	"k8s.io/apimachinery/pkg/util/yaml"
 	"net/http"
+
+	"github.com/Sirupsen/logrus"
+	v1 "github.com/vmware/purser/pkg/client/clientset/typed/groups/v1"
 	"github.com/vmware/purser/pkg/controller"
-	"github.com/vmware/purser/pkg/client/clientset/typed/groups/v1"
+	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -39,8 +40,9 @@ func addHeaders(w *http.ResponseWriter, r *http.Request) {
 }
 
 func addAccessControlHeaders(w *http.ResponseWriter, r *http.Request) {
-	(*w).Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+	// (*w).Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
 	(*w).Header().Set("Access-Control-Allow-Credentials", "true")
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
 func writeBytes(w io.Writer, data []byte) {

@@ -7,14 +7,13 @@ import { CloudRegion } from '../components/compare-clouds/cloud-region';
 import { CloudDetails } from '../components/compare-clouds/cloud-details';
 
 @Injectable()
-
 export class CompareService{
 
     regions : CloudRegion[] = [];
     cloudDetails : CloudDetails[] = [];
-    
-    getRegionsUrl = BACKEND_URL + "clouds/regions";
-    postCloudRegion = BACKEND_URL + "clouds/compare";
+
+    getRegionsUrl = "/clouds/regions";
+    postCloudRegion =  "/api/clouds/compare";
 
     constructor(private http: HttpClient){ }
 
@@ -23,8 +22,10 @@ export class CompareService{
     }
 
     //returns all the clouds details
-    sendCloudRegion(sendCloudRegion):Observable<any>{
-      return this.http.post<any>(this.postCloudRegion,sendCloudRegion);
+    sendCloudRegion(sendCloudRegion) : Observable<any>{
+      console.log("testtt")
+      console.log(sendCloudRegion)
+      return this.http.post(this.postCloudRegion,sendCloudRegion,{withCredentials:true});
     }
     
 }

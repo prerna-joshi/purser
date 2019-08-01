@@ -51,7 +51,7 @@
                 <div>Memory : {{selectedCloud.memory}} GB</div>
                 <div>Memory Cost : {{selectedCloud.memoryCost.toFixed(2)}} $/month</div>
                 <div class = "cost">Total Cost : {{selectedCloud.totalCost.toFixed(2)}} $/month</div>
-                <div><button class="btn btn-success-outline" (click) = "showDetails(selectedCloud.nodes)">View Details</button></div>
+                <div><button class="btn btn-success" (click) = "showDetails(selectedCloud.nodes)">View Details</button></div>
 
                 <clr-datagrid *ngIf = "viewDetails">
                         <clr-dg-column>Instance Type</clr-dg-column>

@@ -249,6 +249,11 @@ export class PlanInfraComponent implements OnInit {
       selectedRegion : "US-East-1"
     },
     {
+      cloud : "Microsoft Azure",
+      region : ["US-East-1", "US-West-2", "EU-West-1"] ,
+      selectedRegion : "US-East-1"     
+    },
+    {
       cloud : "Google Cloud Platform",
       region : ["US-East-1", "US-West-2", "EU-West-1"],
       selectedRegion : "US-East-1"      
@@ -257,15 +262,11 @@ export class PlanInfraComponent implements OnInit {
       cloud : "Pivotal Container Service",
       region : ["US-East-1", "US-West-2", "EU-West-1"],
       selectedRegion : "US-East-1"
-    },
-    {
-      cloud : "Microsoft Azure",
-      region : ["US-East-1", "US-West-2", "EU-West-1"] ,
-      selectedRegion : "US-East-1"     
     }
+
   ];
 
-  images = ["awst.png", "gcpt.png", "pkst.png", "azuret.png"];
+  images = ["awst.png", "azuret.png","gcpt.png", "pkst.png"];
 
   myStyles = [{
     'background-color': '#FEF3B5',

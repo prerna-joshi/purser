@@ -24,7 +24,7 @@ export class CompareCloudsComponent implements OnInit {
 
   detailsResponse : any[] = [];
 
-  images = ["awst.png", "gcpt.png", "pkst.png", "azuret.png"];
+  images = ["awst.png",  "azuret.png","gcpt.png", "pkst.png"];
 
   myStyles = [{
     'background-color': '#FEF3B5',
@@ -47,6 +47,7 @@ export class CompareCloudsComponent implements OnInit {
     this.setDefault();
     this.cloudsLoaded = false;
     this.showCompare = false;
+    //this.showCompare = true;
 
     this.regions = this.compareService.getRegions().subscribe(response => {
       this.showCompare = true;
@@ -65,6 +66,12 @@ export class CompareCloudsComponent implements OnInit {
         selectedRegion : "us-east-1"
       },
       {
+        cloud : "Microsoft Azure",
+        cloudName : "azure",
+        region : ["eastus", "westus", "westus2", "australiaeast", "eastasia", "southeastasia", "centralus", "eastus2", "northcentralus", "southcentralus", "notheurope", "westeurope", "southindia", "centralindia", "westindia"] ,
+        selectedRegion : "eastus"     
+      },
+      {
         cloud : "Google Cloud Platform",
         cloudName : "gcp",
         region : ["us-east1", "us-west1","asia-east1","asia-east2","asia-northeast1","asia-southeast1","us-east1","us-east4","europe-west1","us-west1"],
@@ -75,12 +82,6 @@ export class CompareCloudsComponent implements OnInit {
         cloudName : "pks",
         region : ["US-East-1", "US-West-2", "EU-West-1"],
         selectedRegion : "US-East-1"
-      },
-      {
-        cloud : "Microsoft Azure",
-        cloudName : "azure",
-        region : ["eastus", "westus", "westus2", "australiaeast", "eastasia", "southeastasia", "centralus", "eastus2", "northcentralus", "southcentralus", "notheurope", "westeurope", "southindia", "centralindia", "westindia"] ,
-        selectedRegion : "eastus"     
       }
     ];
     this.cloudDetails = 

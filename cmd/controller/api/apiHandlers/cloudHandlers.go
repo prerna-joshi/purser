@@ -23,7 +23,10 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/vmware/purser/pkg/controller/dgraph/models"
+	"github.com/vmware/purser/pkg/controller/utils"
 	"github.com/vmware/purser/pkg/pricing"
+	apps_v1beta1 "k8s.io/api/apps/v1beta1"
+	"k8s.io/apimachinery/pkg/util/yaml"
 )
 
 // GetCloudRegionList listens on /api/clouds/regions endpoint
@@ -62,16 +65,36 @@ func CompareCloud(w http.ResponseWriter, r *http.Request) {
 // InfrastructurePlanning ...
 func InfrastructurePlanning(w http.ResponseWriter, r *http.Request) {
 	addAccessControlHeaders(&w, r)
-	// groupData, err := convertRequestBodyToJSON(r)
-	// if err != nil {
-	// 	logrus.Errorf("unable to parse request as either JSON or YAML, err: %v", err)
-	// 	http.Error(w, err.Error(), http.StatusBadRequest)
-	// 	return
-	// }
-	// encodeAndWrite(w, string(groupData))
-	// yaml
-	// convert to JSON
+	r.ParseMultipartForm(int64(2 * 1024 * 1024))
+	fileData := r.FormValue("fileKey")
+	deploymentData, err := yaml.ToJSON([]byte(fileData))
+	//deploymentData, err := convertRequestBodyToJSON(r)
+	if err != nil {
+		logrus.Errorf("unable to parse request as either JSON or YAML, err: %v", err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	// logrus.Infof("deploymentData: \n<%+v>\n", deploymentData)
+	deployment := apps_v1beta1.Deployment{}
+	if jsonErr := json.Unmarshal(deploymentData, &deployment); jsonErr != nil {
+		logrus.Errorf("unable to parse object as deployment, err: %v", jsonErr)
+		http.Error(w, jsonErr.Error(), http.StatusBadRequest)
+		return
+	}
+	logrus.Infof("deployment: \n<%+v>\n", deployment)
+
+	replicas := *deployment.Spec.Replicas
+	cpu := deployment.Spec.Template.Spec.Containers[0].Resources.Requests.Cpu()
+	memory := deployment.Spec.Template.Spec.Containers[0].Resources.Requests.Memory()
+	logrus.Infof("replicas: %v", replicas)
+	logrus.Infof("CPU: %v, Memory: %v", cpu, memory)
+
+	nodes := []models.Node{}
+	for i := 0; i < int(replicas); i++ {
+		nodes = append(nodes, models.Node{CPUCapacity: utils.ConvertToFloat64CPU(cpu), MemoryCapacity: utils.ConvertToFloat64GB(memory)})
+	}
+
 	// JSON to goStruct
-	nodesRecommender := pricing.InfraPlanningService()
+	nodesRecommender := pricing.InfraPlanningService(nodes)
 	encodeAndWrite(w, nodesRecommender)
 }

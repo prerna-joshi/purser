@@ -37,27 +37,6 @@
   </div>
 </div>
 
-<div class="row" *ngIf = "showCloud">
-    <div class="col-md-3" *ngFor = "let cloud of cloudDetails ; let c = index">
-        <div class="card">
-            <div class="card-block">
-                <div class="card-title">
-                </div>
-                <div class="card-text">
-                    <div>CPU : {{cloud.cpu}} vCPU</div>
-                    <div>CPU Cost: {{cloud.cpuCost.toFixed(2)}} $/month</div>
-                    <div>Memory : {{cloud.memory}} GB</div>
-                    <div>Memory Cost : {{cloud.memoryCost.toFixed(2)}} $/month</div>
-                    <div class = "cost">Total Cost : {{cloud.totalCost.toFixed(2)}} $/month</div>
-                </div>
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-link" (click) = "showDetails(cloud)">View Details</button>
-          </div>
-        </div>
-    </div>
-  </div>
-
   <div class="clr-row backRow" *ngIf = "backBtn">
       <div class="clr-col-12">
           <button class="btn btn-outline" (click) = "back()"><label class = "back">Back</label></button>    

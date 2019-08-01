@@ -299,18 +299,20 @@ export class PlanInfraComponent implements OnInit {
     this.backBtn = true;
     this.showCloud = true;
 
-    for(let cd of this.cloudDetails){
-      cd.costDiff = (cd.existingCost - cd.totalCost).toFixed(2);
-      cd.costPercent = ((cd.costDiff / cd.existingCost) * 100).toFixed(2);
-    }
+    
 
-    this.compareService.sendCloudRegion(null).subscribe(data => {
-      console.log(data);
-      this.cloudDetails = data;
-  });
+  //   this.compareService.sendCloudRegion(null).subscribe(data => {
+  //     console.log(data);
+  //     this.cloudDetails = data;
+  // });
 
     this.planInfraService.postFile(this.fileToUpload).subscribe(data => {
         console.log("Uploaded File successfully");
+        this.cloudDetails = data;
+        for(let cd of this.cloudDetails){
+          cd.costDiff = (cd.existingCost - cd.totalCost);
+          cd.costPercent = ((cd.costDiff / cd.existingCost) * 100).toFixed(2);
+        }
       }, error => {
         console.log(error);
       });

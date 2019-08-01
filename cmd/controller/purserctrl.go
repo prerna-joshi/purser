@@ -64,7 +64,7 @@ func main() {
 	go api.StartServer(conf)
 	// go startCronJobForPopulatingRateCard()
 	// time.Sleep(time.Minute * 5)
-	pricing.TestRateCards()
+	// pricing.TestRateCards()
 	go eventprocessor.ProcessEvents(&conf)
 
 	if *interactions == "enable" {

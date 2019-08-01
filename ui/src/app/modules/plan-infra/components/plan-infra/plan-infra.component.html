@@ -47,7 +47,7 @@
                     
                     <div class = "change">
                           <div class = "cost"><label>Savings : &nbsp;</label></div>
-                      <div id = "change{{c}}" [ngClass]="{'costDiffNeg': cloud.costDiff < 0,'costDiffPos' : cloud.costDiff > 0, 'costDiffZero' : cloud.costDiff == 0}" >{{cloud.costDiff}}</div>
+                      <div id = "change{{c}}" [ngClass]="{'costDiffNeg': cloud.costDiff < 0,'costDiffPos' : cloud.costDiff > 0, 'costDiffZero' : cloud.costDiff == 0}" >{{cloud.costDiff.toFixed(2)}}</div>
                       <div id = "changePercent{{c}}" [ngClass]="{'costDiffNeg': cloud.costDiff < 0,'costDiffPos' : cloud.costDiff > 0, 'costDiffZero' : cloud.costDiff == 0}" >({{cloud.costPercent}} %)</div>       
                     </div>
                 </div>

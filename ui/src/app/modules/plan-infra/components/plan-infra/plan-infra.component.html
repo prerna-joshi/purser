@@ -42,14 +42,7 @@
                     <div>CPU Cost: {{cloud.cpuCost.toFixed(2)}} $/month</div>
                     <div>Memory : {{cloud.memory.toFixed(2)}} GB</div>
                     <div>Memory Cost : {{cloud.memoryCost.toFixed(2)}} $/month</div>
-                    <!--<div>Existing Cost : {{cloudDetails[c].exisitingCost}} $/month</div>-->
                     <div class = "cost">Total Cost : {{cloudDetails[c].totalCost.toFixed(2)}} $/month</div>
-                    
-                    <div class = "change">
-                          <div class = "cost"><label>Savings : &nbsp;</label></div>
-                      <div id = "change{{c}}" [ngClass]="{'costDiffNeg': cloud.costDiff < 0,'costDiffPos' : cloud.costDiff > 0, 'costDiffZero' : cloud.costDiff == 0}" >{{cloud.costDiff.toFixed(2)}}</div>
-                      <div id = "changePercent{{c}}" [ngClass]="{'costDiffNeg': cloud.costDiff < 0,'costDiffPos' : cloud.costDiff > 0, 'costDiffZero' : cloud.costDiff == 0}" >({{cloud.costPercent}} %)</div>       
-                    </div>
                 </div>
             </div>
             <div class="card-footer">

@@ -56,7 +56,7 @@ const GOOD = 1
 const BAD = -1
 const NEUTRAL = 0
 const UNDEFINED = -2
-const MAX_SCORE = 32
+const MAX_SCORE = 64
 const CPU_FACTOR = 4
 const MEMORY_FACTOR = 1
 
@@ -212,7 +212,7 @@ func convertDeploymentToListOfPods(deployment apps_v1beta1.Deployment) []Pod {
 			Name:         deployment.ObjectMeta.Name + "-" + strconv.Itoa(i),
 			App:          deployment.Spec.Template.ObjectMeta.Labels["app"],
 			Affinity:     strings.Split(deployment.Spec.Template.ObjectMeta.Labels["affinity"], ","),
-			AntiAffinity: append(strings.Split(deployment.Spec.Template.ObjectMeta.Labels["antiaffinity"], ","), deployment.Spec.Template.ObjectMeta.Labels["app"]),
+			AntiAffinity: append(strings.Split(deployment.Spec.Template.ObjectMeta.Labels["antiAffinity"], ","), deployment.Spec.Template.ObjectMeta.Labels["app"]),
 			CPU:          utils.ConvertToFloat64CPU(deployment.Spec.Template.Spec.Containers[0].Resources.Requests.Cpu()),
 			Memory:       utils.ConvertToFloat64GB(deployment.Spec.Template.Spec.Containers[0].Resources.Requests.Memory()),
 		})

@@ -36,7 +36,7 @@ export class CompareCloudsComponent implements OnInit {
 
   detailsResponse : any[] = [];
 
-  images = ["awst.png", "gcpt.png", "pkst.png","azuret.png"];
+  images = ["awst.png", "gcpt.png", "azuret.png","pkst.png",];
 
   myStyles = [{
     'background-color': '#FEF3B5',
@@ -83,19 +83,19 @@ export class CompareCloudsComponent implements OnInit {
         region : ["us-east1", "us-west1","asia-east1","asia-east2","asia-northeast1","asia-southeast1","us-east1","us-east4","europe-west1","us-west1"],
         selectedRegion : "us-east1"      
       },
-
-      {
-        cloudName : "Pivotal Container Service",
-        cloud : "pks",
-        region : ["US-East-1", "US-West-2", "EU-West-1"],
-        selectedRegion : "US-East-1"
-      },
       {
         cloudName : "Microsoft Azure",
         cloud : "azure",
         region : ["eastus", "westus", "westus2", "australiaeast", "eastasia", "southeastasia", "centralus", "eastus2", "northcentralus", "southcentralus", "notheurope", "westeurope", "southindia", "centralindia", "westindia"] ,
         selectedRegion : "eastus"     
       },
+      {
+        cloudName : "Pivotal Container Service",
+        cloud : "pks",
+        region : ["US-East-1", "US-West-2", "EU-West-1"],
+        selectedRegion : "US-East-1"
+      },
+      
     ];
     this.cloudDetails = 
     [
